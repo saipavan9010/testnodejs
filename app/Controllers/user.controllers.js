@@ -10,10 +10,10 @@ exports.test = function (req, res) {
 exports.User_create = async function (req, res) {
     try {
          var user=await UserService.saveUsers(req,res);
-         return res.status(200).json({ status: 200, data: user, message: "User Created successfully" });
+         return res.status(200).json(user);
     }catch (e) {
     // Log Errors
-        return res.status(400).json({ status: 400, message: e.message });
+        return res.status(500).json({ status: 400, message: e.message });
    }
 };
 

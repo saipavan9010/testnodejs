@@ -5,8 +5,8 @@ const saltRounds = 10;
 const UserSchema = mongoose.Schema({
     first_name: String,
     last_name: String,
-    mobile_no: Number,
-    email: {type:String,unique:true,required:true},
+    mobile_no: {type:Number,unique:true,required:true,message: 'Mobile No is Already exist'},
+    email: {type:String,unique:true,required:true,message: 'Email is Already exist'},
     user_name: String,
     gender: String,
     password:{type:String,required: true} 

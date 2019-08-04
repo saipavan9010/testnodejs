@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 exports.saveUsers = async function (req,res,next) {
 
     try {
-        let user = await new User(
+        let user =  new User(
             {
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
@@ -15,18 +15,13 @@ exports.saveUsers = async function (req,res,next) {
                 password: req.body.password
             }
         );
+      let user_data=await user.save();
+        return  {status:"success", message: "user Created",data:{user: user_data}};
         
-    
-          user.save(function (err) {
-            if (err) {
-                return err;
-             }
-             return 'User Created successfully';
-        })
         
     } catch (e) {
         // Log Errors
-        throw Error('Error while Paginating Users')
+        throw Error(e.message);
     }
 }
 
@@ -45,6 +40,6 @@ exports.login = async function (req,res,next) {
         }
     } catch (e) {
         // Log Errors
-        throw Error(e)
+        throw Error({message:e.message})
     }
 }
