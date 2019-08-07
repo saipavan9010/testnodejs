@@ -50,7 +50,14 @@ mongoose.connect(dbConfig.url, {
 });
 
 function validateUser(req, res, next) {
-  jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+  let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
+  if (token.startsWith('Bearer ')) {
+    // Remove Bearer from string
+    token = token.slice(7, token.length);
+  }
+  
+  if (token) {
+     jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
       res.json({status:"error", message: err.message, data:null});
     }else{
@@ -59,7 +66,15 @@ function validateUser(req, res, next) {
       next();
     }
   });
-  
+
+
+  }else {
+    return res.json({
+      success: false,
+      message: 'Auth token is not supplied'
+    });
+  }
+ 
 }
 
 
