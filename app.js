@@ -50,16 +50,20 @@ mongoose.connect(dbConfig.url, {
 });
 
 function validateUser(req, res, next) {
+  //  console.log(req.headers['authorization']);
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
+  //console.log(token);
   if (token.startsWith('Bearer ')) {
+    //console.log("pavan");
     // Remove Bearer from string
     token = token.slice(7, token.length);
   }
   
   if (token) {
-     jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
+    //console.log(token);
+     jwt.verify(token, req.app.get('secretKey'), function(err, decoded) {
     if (err) {
-      res.json({status:"error", message: err.message, data:null});
+      res.status(422).json({message: err.message, data:null});
     }else{
       // add user id to request
       req.body.userId = decoded.id;

@@ -9,25 +9,33 @@ exports.test = function (req, res) {
 
 exports.User_create = async function (req, res) {
     try {
-         var user=await UserService.saveUsers(req,res);
+         var user=await UserService.saveUsers(req,res); 
          return res.status(200).json(user);
     }catch (e) {
-    // Log Errors
-        return res.status(500).json({ status: 400, message: e.message });
+        throw Error(e.message);
    }
 };
 
 
 exports.User_login =async function (req, res,next) {
     try {
+        // console.log(req)
         var user_details=await UserService.login(req,res);
-        console.log(user_details);
+        //console.log(user_details);
         return res.status(200).json(user_details);
    }catch (e) {
-   // Log Errors
-       return res.status(400).json({ status: 400, message: e.message });
+    throw Error(e.message);
    }
 };
+
+exports.User_list=async function(req,res,next){
+    try{
+    var user_list= await UserService.userlist();
+    return res.status(200).json(user_list);
+    } catch (e){
+        throw Error(e.message);
+    }
+}
 
 
 exports.User_detail=async function (req, res,next) {

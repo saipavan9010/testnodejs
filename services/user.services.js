@@ -25,11 +25,23 @@ exports.saveUsers = async function (req,res,next) {
     }
 }
 
+exports.userlist = async function (req,res,next) {
+
+    try {
+        var user_data=await User.find();
+        return  {status:"success", message: "user found!!!",data:{user: user_data}};
+        
+    } catch (e) {
+        // Log Errors
+        throw Error(e.message);
+    }
+}
+
 
 exports.login = async function (req,res,next) {
 
     try {
-        
+        console.log(req.body.email);
         var user_data=await User.findOne({email:req.body.email});
         if(bcrypt.compareSync(req.body.password, user_data.password)) {
         const token =  jwt.sign({id: user_data._id}, req.app.get('secretKey'), { expiresIn: '12h' });
@@ -40,6 +52,11 @@ exports.login = async function (req,res,next) {
         }
     } catch (e) {
         // Log Errors
-        throw Error({message:e.message})
+        throw Error(e.message);
     }
+
+
+
+
+
 }
