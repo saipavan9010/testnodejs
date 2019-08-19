@@ -37,6 +37,18 @@ exports.userlist = async function (req,res,next) {
     }
 }
 
+exports.userdetail = async function (req,res,next) {
+
+    try {
+        var user_detail=await User.findById(req.params.Id);
+        return  {status:"success",data:{user: user_detail}};
+        
+    } catch (e) {
+        // Log Errors
+        throw Error(e.message);
+    }
+}
+
 
 exports.login = async function (req,res,next) {
 

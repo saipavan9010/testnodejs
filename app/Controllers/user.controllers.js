@@ -39,13 +39,13 @@ exports.User_list=async function(req,res,next){
 
 
 exports.User_detail=async function (req, res,next) {
-   var user_deatils=await User.findById(req.params.Id, function(err, userInfo){
-        if (err) {
-            res.status(400).json(err);
-        } else {
-        res.status(200).json(user_deatils);
-        }
-       });
+    try{
+    var user_detail= await UserService.userdetail(req,res,next);
+    return res.status(200).json(user_detail);
+    }catch (e){
+    throw Error(e.message);
+    }
+  
 };
 
 // exports.User_update = function (req, res) {
