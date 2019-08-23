@@ -25,6 +25,24 @@ exports.saveUsers = async function (req,res,next) {
     }
 }
 
+exports.login = async function (req,res,next) {
+
+    try {
+        console.log(req.body.email);
+        var user_data=await User.findOne({email:req.body.email});
+        if(bcrypt.compareSync(req.body.password, user_data.password)) {
+        const token =  jwt.sign({id: user_data._id}, req.app.get('secretKey'), { expiresIn: '12h' });
+        
+        return  {status:"success", message: "user found!!!",data:{user: user_data, token:token}};
+        }else{
+        return {message: "Invalid email/password!!!"};
+        }
+    } catch (e) {
+        // Log Errors
+        throw Error(e.message);
+    }
+}
+
 exports.userlist = async function (req,res,next) {
 
     try {
@@ -49,26 +67,16 @@ exports.userdetail = async function (req,res,next) {
     }
 }
 
-
-exports.login = async function (req,res,next) {
+exports.userupdate = async function (req,res,next) {
 
     try {
-        console.log(req.body.email);
-        var user_data=await User.findOne({email:req.body.email});
-        if(bcrypt.compareSync(req.body.password, user_data.password)) {
-        const token =  jwt.sign({id: user_data._id}, req.app.get('secretKey'), { expiresIn: '12h' });
+        var user_update=await User.findByIdAndUpdate(req.params.Id,{$set: req.body});
+        return  {status:"success",message:"Updated Successfully"};
         
-        return  {status:"success", message: "user found!!!",data:{user: user_data, token:token}};
-        }else{
-        return {message: "Invalid email/password!!!"};
-        }
     } catch (e) {
         // Log Errors
         throw Error(e.message);
     }
-
-
-
-
-
 }
+
+

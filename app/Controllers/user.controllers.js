@@ -48,12 +48,15 @@ exports.User_detail=async function (req, res,next) {
   
 };
 
-// exports.User_update = function (req, res) {
-//     User.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, User) {
-//         if (err) return next(err);
-//         res.send('User udpated.');
-//     });
-// };
+exports.User_update =async function (req, res,next) {
+    try{
+        var user_update= await UserService.userupdate(req,res,next);
+        return res.status(200).json(user_update);
+    }catch (e){
+        throw Error(e.message);
+    }
+    
+};
 
 
 
