@@ -12,7 +12,7 @@ exports.User_create = async function (req, res) {
          var user=await UserService.saveUsers(req,res); 
          return res.status(200).json(user);
     }catch (e) {
-        throw Error(e.message);
+        throw Error(e._message);
    }
 };
 
