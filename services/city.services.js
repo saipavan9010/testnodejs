@@ -25,7 +25,7 @@ exports.saveCity = async function (req,res,next) {
 exports.citylist = async function (req,res,next) {
 
     try {
-        var city_data=await Cityservice.find().populate('country_id').exec();
+        var city_data=await Cityservice.find().populate('country_id');
         return  {status:"success",city_data: city_data};
         
     } catch (e) {
