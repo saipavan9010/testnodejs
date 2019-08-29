@@ -25,11 +25,11 @@ exports.saveCity = async function (req,res,next) {
 exports.citylist = async function (req,res,next) {
 
     try {
-        var city_data=await Cityservice.find();
+        var city_data=await Cityservice.find().populate('country_id').exec();
         return  {status:"success",city_data: city_data};
         
     } catch (e) {
-        // Log Errors
+        console.log(e)
         return {message:e.message};
     }
 }

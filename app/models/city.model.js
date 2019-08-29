@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const CitySchema = mongoose.Schema({
-    country_id:{type:mongoose.Schema.Types.ObjectId,required: true,ref:'Country'},
+    country_id:{type:mongoose.Schema.Types.ObjectId,required: true,ref:'countries'},
     city_name:{type:String,required: true},
     }, {
     timestamps: true
@@ -9,4 +9,4 @@ const CitySchema = mongoose.Schema({
 
 
 
-module.exports = mongoose.model('City', CitySchema);
+module.exports = mongoose.model('cities', CitySchema,'cities');
