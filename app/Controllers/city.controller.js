@@ -16,7 +16,7 @@ exports.City_create = async function (req, res) {
 
 exports.City_list=async function(req,res,next){
     try{
-        console.log("pavan");
+         
     var City_list= await Cityservice.citylist();
     return res.status(200).json(City_list);
     } catch (e){

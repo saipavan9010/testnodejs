@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Users = require('../app/Controllers/user.controllers.js');
+const Custom = require('../app/Controllers/customuser.controllers.js');
 const Country = require('../app/Controllers/country.controllers.js');
 const City = require('../app/Controllers/city.controller.js');
 
@@ -9,6 +10,9 @@ const City = require('../app/Controllers/city.controller.js');
 // Retrieve all Users
 router.get('/userslist', Users.User_list);
 router.post('/create', Users.User_create);
+router.post('/fileupload', Custom.fileupload);
+// router.post('/sendmail', Custom.sendmail);
+
 router.post('/login', Users.User_login);
 router.get('/detail/:Id', Users.User_detail);
 router.post('/update/:Id', Users.User_update);
